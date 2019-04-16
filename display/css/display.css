@@ -1,0 +1,49 @@
+@font-face {
+    font-family: 'Raleway';
+    src: url('Raleway.ttf') format('ttf'),
+         url('raleway-webfont.woff2') format('woff2'),
+         url('raleway-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+html, body {
+    height: 100%;
+    width: 100%;
+    background-color: #2f3640;
+    overflow: hidden;
+}
+
+.container-fluid {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}
+
+.row {
+    width: 100%;
+}
+
+.col_left {
+    display: table-cell;
+    width: 50%;
+}
+
+#loader {
+    margin: 0 auto;
+    height: 80vh;
+}
+
+.loadgo-overlay {
+    left: 0px;
+    right: auto;
+}
+
+h1 {
+    color: #FFBF00;
+    font-family: 'Raleway', Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 100px;
+}

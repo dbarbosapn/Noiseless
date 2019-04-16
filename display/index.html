@@ -1,0 +1,43 @@
+<!--
+Filename: display/index.html
+Project: noiseless
+Created Date: Monday, April 15th 2019, 5:25:36 pm
+Author: Diogo Barbosa
+
+Copyright (c) 2019 Diogo Barbosa
+-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Noiseless - Admin Page</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="Diogo Barbosa">
+        <link rel="stylesheet" href="./plugins/bootstrap/css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="./css/Chart.min.css">
+        <link rel="stylesheet" href="./css/display.css"> 
+    </head>
+
+    <body>
+
+        <div class="container-fluid">
+            <div class="row" style="height: 100%;">
+                <div class="col d-flex align-items-center justify-content-center">
+                    <img id="loader" src="img/ice-cream.png" alt="Loading image..."/>
+                </div>
+                <div class="col d-flex align-items-center justify-content-center">
+                    <canvas id="myChart" width="100" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <script type="text/javascript" src="./plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="plugins/jquery-3.4.0.min.js"></script>
+        <script type="text/javascript" src="plugins/loadgo.min.js"></script>
+        <script type="text/javascript" src="plugins/Chart.bundle.min.js"></script>
+        <script type="text/javascript" src="js/display.js"></script>
+    </body>
+</html>
