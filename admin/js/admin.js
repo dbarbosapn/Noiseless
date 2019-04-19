@@ -146,6 +146,18 @@ $('#submit_filltime').click(function() {
     }
 })
 
+$('#get_noiseaverage').click(function() {
+    document.getElementById('noiseAverageChart').toBlob(function(blob) {
+        saveAs(blob, "noiseAverageChart.png");
+    })
+})
+
+$('#get_noiseaverageweek').click(function() {
+    document.getElementById('noiseAverageWeekChart').toBlob(function(blob) {
+        saveAs(blob, "noiseAverageWeekChart.png");
+    })
+})
+
 function setupCharts() {
 
     // noise average day
@@ -236,4 +248,10 @@ function setupCharts() {
             alert("Error retrieving noise average week data.")
         }
     })
+}
+
+function generateDownload(data) {
+    var url = window.URL.createObjectURL(new Blob([data], {type: 'text/plain'}));
+    console.log(url);
+    window.open(url);
 }
