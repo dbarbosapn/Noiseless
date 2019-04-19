@@ -133,7 +133,14 @@ function icecream() {
     var d = Date.now() - (new Date(new Date().setHours(0,0,0,0))).getTime();
     if(d > millisMax || d < millisMin) {
         if(!reset) {
-            //TODO: Send moving average
+            $.ajax({
+                url: "/pushaverage",
+                type: "post",
+                contentType: "application/x-www-form-urlencoded",
+                data: {
+                    'average': movingAverage.mean,
+                }
+            })
             movingAverage = new MovingAverageCalculator();
             reset = true;
         }

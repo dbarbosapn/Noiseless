@@ -33,13 +33,13 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/admin/index.html
 app.listen(port, () => console.log(`Server listening on port ${port}!`))
 
 var validatePassword = function(pw) {
-    var password = (localStorage.getItem("pw") == null) ? "1234" : localStorage.getItem("pw");
+    var password = (process.env.noiselesspw == null) ? "1234" : process.env.noiselesspw;
     return (pw === password);
 }
 
 app.post('/setpassword', function(req, res) {
     if(validatePassword(req.body.pw)) {
-        localStorage.setItem("pw", req.body.password);
+        process.env.noiselesspw = req.body.password;
         res.send({"result": true});
     } else {
         res.send({"result": false})
@@ -82,4 +82,43 @@ app.get('/getfill', function(req, res) {
             "fillTime": (localStorage.getItem("fillTime") == null) ? "5" : localStorage.getItem("fillTime"),
         }
     })
+})
+
+app.get('/getnoiseaverage', function(req, res) {
+    res.send({
+        "result": (localStorage.getItem("noiseAverage") == null) ? [] : JSON.parse(localStorage.getItem("noiseAverage"))
+    })
+})
+
+app.get('/getnoiseaverageweek', function(req, res) {
+    res.send({
+        "result": (localStorage.getItem("noiseAverageWeek") == null) ? [] : JSON.parse(localStorage.getItem("noiseAverageWeek"))
+    })
+})
+
+app.post('/pushaverage', function(req, res) {
+    var d = new Date();
+    d.setHours(0,0,0,0);
+    var average = parseFloat(req.body.average);
+    
+    // Push average for "Noise Average per Day"
+    var data = (localStorage.getItem("noiseAverage") == null) ? [] : localStorage.getItem("noiseAverage")
+    data.push({
+        x: d,
+        y: average
+    })
+    localStorage.setItem("noiseAverage", JSON.stringify(data));
+
+    // Push average for "Noise Average per Week Day"
+    var counters = (localStorage.getItem("weekCounters") == null) ? [0, 0, 0, 0, 0, 0, 0] : JSON.parse(localStorage.getItem("weekCounters"))
+    var weekdata = (localStorage.getItem("noiseAverageWeek") == null) ? [0, 0, 0, 0, 0, 0, 0] : JSON.parse(localStorage.getItem("noiseAverageWeek"))
+    var weekDay = d.getDay()
+
+    weekdata[weekDay] = ((weekdata[weekDay] * counters[weekDay]) + average) / (counters[weekDay]+1);
+    counters[weekDay] += 1;
+    
+    localStorage.setItem("weekCounters", JSON.stringify(counters));
+    localStorage.setItem("noiseAverageWeek", JSON.stringify(weekdata));
+    
+    res.send({"result": true});
 })

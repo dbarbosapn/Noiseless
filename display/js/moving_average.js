@@ -15,13 +15,6 @@ class MovingAverageCalculator {
     }
 
     get mean() {
-        this.validate()
         return this._mean
-    }
-
-    validate() {
-        if (this.count == 0) {
-            throw new Error('Mean is undefined')
-        }
     }
 }
