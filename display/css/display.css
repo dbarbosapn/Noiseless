@@ -47,3 +47,10 @@ h1 {
     font-style: normal;
     font-size: 100px;
 }
+
+#confetti {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 50vw;
+}

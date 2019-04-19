@@ -22,35 +22,39 @@ Copyright (c) 2019 Diogo Barbosa
 
     <body>
 
-        <div class="container">
-            <div class="row" id="top-row">
-                <div class="col-sm">
-                    <div class="card top-card">
-                        This is card 1
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div class="card top-card">
-                        This is card 2
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div class="card top-card">
-                        This is card 3
-                    </div>
-                </div>
-            </div>
-            <div class="row" id="mid-row">
-                <div class="col-sm">
-                    <div class="card">
-                        This is graph card
-                    </div>
-                </div>
-            </div>
+        <!-- Change Password Form -->
+        <h2>Change Administration Password</h2>
+        <div class="form-group">
+            <label for="newPassword">Change password</label>
+            <input type="password" class="form-control" id="newPassword" aria-describedby="passwordHelp" placeholder="Enter password" />
+            <small id="passwordHelp" class="form-text text-muted">You can find the default password in the documentation.</small>
         </div>
+        <button type="submit" class="btn btn-primary" id="submit_newpw">Change Password</button>
 
+        <!-- Set Times Form -->
+        <h2 style="margin-top: 60px;">Set Icecream Timers</h2>
+        <div class="form-group">
+            <label for="startingTime">Starting Time</label>
+            <input class="form-control" type="time" value="00:00:00" id="startingTime">
+        </div>
+        <div class="form-group">
+            <label for="endingTime">Ending Time</label>
+            <input class="form-control" type="time" value="23:00:00" id="endingTime">
+        </div>
+        <button type="submit" class="btn btn-primary" id="submit_timers">Set Timers</button>
+
+        <!-- Icecream Fill Time Form -->
+        <h2 style="margin-top: 60px;">Set Icecream Fill Time</h2>
+        <div class="form-group">
+            <label for="fillTime">Fill Time</label>
+            <input class="form-control" aria-describedby="fillHelp" type="number" value="0" id="fillTime">
+            <small id="fillHelp" class="form-text text-muted">Time it takes (without noise) for the icecream to fill (minutes).</small>
+        </div>
+        <button type="submit" class="btn btn-primary" id="submit_filltime">Set Fill Time</button>
 
         <script type="text/javascript" src="./plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./plugins/jquery-3.4.0.min.js"></script>
+        <script type="text/javascript" src="./js/admin.js"></script>
         
     </body>
 </html>

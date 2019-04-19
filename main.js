@@ -9,9 +9,15 @@
 
 const express = require('express');
 const path = require('path');
+if (typeof localStorage === "undefined" || localStorage === null) {
+    var LocalStorage = require('node-localstorage').LocalStorage;
+    localStorage = new LocalStorage('./.scratch');
+}
 
 const app = express();
 const port = 3000
+
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/documentation', express.static(__dirname + "/documentation"))
 app.get('/documentation', (req, res) => {
@@ -25,3 +31,55 @@ app.use('/', express.static(__dirname + "/admin"))
 app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/admin/index.html')))
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`))
+
+var validatePassword = function(pw) {
+    var password = (localStorage.getItem("pw") == null) ? "1234" : localStorage.getItem("pw");
+    return (pw === password);
+}
+
+app.post('/setpassword', function(req, res) {
+    if(validatePassword(req.body.pw)) {
+        localStorage.setItem("pw", req.body.password);
+        res.send({"result": true});
+    } else {
+        res.send({"result": false})
+    }
+})
+
+app.post('/settimers', function(req, res) {
+    if(validatePassword(req.body.pw)) {
+        var startingTime = req.body.startingTime.split(':')
+        var endingTime = req.body.endingTime.split(':')
+        localStorage.setItem("startingTime", (parseInt(startingTime[0]) * 60 * 60 * 1000) + (parseInt(startingTime[1]) * 60 * 1000))
+        localStorage.setItem("endingTime", (parseInt(endingTime[0]) * 60 * 60 * 1000) + (parseInt(endingTime[1]) * 60 * 1000))
+        res.send({"result": true});
+    } else {
+        res.send({"result": false})
+    }
+})
+
+app.get('/gettimers', function(req, res) {
+    res.send({
+        "result": {
+            "startingTime": (localStorage.getItem("startingTime") == null) ? "0" : localStorage.getItem("startingTime"),
+            "endingTime": (localStorage.getItem("endingTime") == null) ? "82800000" : localStorage.getItem("endingTime")
+        }
+    })
+})
+
+app.post('/setfill', function(req, res) {
+    if(validatePassword(req.body.pw)) {
+        localStorage.setItem("fillTime", req.body.fillTime)
+        res.send({"result": true});
+    } else {
+        res.send({"result": false})
+    }
+})
+
+app.get('/getfill', function(req, res) {
+    res.send({
+        "result": {
+            "fillTime": (localStorage.getItem("fillTime") == null) ? "5" : localStorage.getItem("fillTime"),
+        }
+    })
+})
