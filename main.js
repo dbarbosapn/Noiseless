@@ -33,13 +33,13 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/admin/index.html
 app.listen(port, () => console.log(`Server listening on port ${port}!`))
 
 var validatePassword = function(pw) {
-    var password = (process.env.noiselesspw == null) ? "1234" : process.env.noiselesspw;
+    var password = (localStorage.getItem("pw") == null) ? "42" : localStorage.getItem("pw");
     return (pw === password);
 }
 
 app.post('/setpassword', function(req, res) {
     if(validatePassword(req.body.pw)) {
-        process.env.noiselesspw = req.body.password;
+        localStorage.setItem("pw", req.body.password);
         res.send({"result": true});
     } else {
         res.send({"result": false})
