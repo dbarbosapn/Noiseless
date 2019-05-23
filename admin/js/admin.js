@@ -10,8 +10,27 @@
 $(document).ready(function() {
     setTimers();
     setFillTime();
-    setupCharts();
+    var c = (new URL(window.location.href)).searchParams.get("mock");
+    var mock = (c == "yes");
+
+    if(!mock) {
+        setupCharts();
+        $('#mock_data').click(function() {
+            var url = window.location.href.split('?')[0];
+            window.location.href = url + "?mock=yes";
+        })
+    }
+    else {
+        setupChartsMock();
+        $('#mock_data').click(function() {
+            var url = window.location.href.split('?')[0];
+            window.location.href = url + "?mock=no";
+        })
+    }
 })
+
+
+
 
 // Useful Variables
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -157,6 +176,74 @@ $('#get_noiseaverageweek').click(function() {
         saveAs(blob, "noiseAverageWeekChart.png");
     })
 })
+
+function setupChartsMock() {
+    console.log("here");
+    var ctx = document.getElementById("noiseAverageChart").getContext("2d");
+    var noiseAverageChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets : [{
+                data: [{"x":"2019-05-18T23:00:00.000Z","y":10},{"x":"2019-05-19T23:00:00.000Z","y":20},{"x":"2019-05-20T23:00:00.000Z","y":30},{"x":"2019-05-25T23:00:00.000Z","y":90},{"x":"2019-05-29T23:00:00.000Z","y":50}],
+                borderColor: 'rgb(255, 191, 0)',
+                backgroundColor: 'rgb(255, 191, 0, 0.1)',
+                borderWidth: 2,
+            }]
+        },
+        options: {
+            responsive: false,
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: 150
+                    }
+                }]
+            },
+            tooltips: { 
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var d = new Date(tooltipItem.xLabel);
+                        return days[d.getDay()] + ", " + d.getDate() + " " + months[d.getMonth()] + ": " + tooltipItem.yLabel;
+                    },
+                }
+            }
+        }
+    })
+    var ctx = document.getElementById("noiseAverageWeekChart").getContext("2d");
+    var noiseAverageWeekChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+            datasets : [{
+                fill: true,
+                backgroundColor: [
+                    '#2ecc71',
+                    '#3498db',
+                    '#9b59b6',
+                    '#f1c40f',
+                    '#e67e22',
+                    '#e74c3c',
+                    '#1abc9c'
+                ],
+                data: [80,100,30,40,50,110,20],
+                borderWidth: 2,
+            }]
+        },
+        options: {
+            responsive: false,
+        }
+    })
+}
 
 function setupCharts() {
 

@@ -4,12 +4,16 @@
   "description": "Software for the project \"O silêncio serve-se frio\"",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
   },
   "author": "Diogo Barbosa",
   "license": "SEE LICENCE IN LICENSE.txt",
   "dependencies": {
     "express": "^4.16.4",
     "node-localstorage": "^1.3.1"
+  },
+  "devDependencies": {
+    "electron": "^5.0.1"
   }
 }

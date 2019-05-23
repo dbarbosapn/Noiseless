@@ -17,6 +17,10 @@ if (typeof localStorage === "undefined" || localStorage === null) {
 const app = express();
 const port = 3000
 
+const electron = require('electron')
+const BrowserWindow = electron.BrowserWindow
+const electronApp = electron.app
+
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/documentation', express.static(__dirname + "/documentation"))
@@ -31,6 +35,16 @@ app.use('/', express.static(__dirname + "/admin"))
 app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/admin/index.html')))
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`))
+
+function createWindow() {
+    console.log("Opening Browser Window...")
+    win = new BrowserWindow({frame: false, backgroundColor: '#000000'})
+    win.setFullScreen(true)
+    win.loadURL('http://localhost:3000/display')
+}
+
+electronApp.disableHardwareAcceleration();
+electronApp.on('ready', createWindow)
 
 var validatePassword = function(pw) {
     var password = (localStorage.getItem("pw") == null) ? "42" : localStorage.getItem("pw");
